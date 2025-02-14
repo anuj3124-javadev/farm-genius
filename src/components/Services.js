@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import "../styles.css";
@@ -28,28 +29,28 @@ const Service = () => {
               <img src="icons/strategy.svg" alt="Strategy" />
               <h3>AI service</h3>
               <p>In this service we provide you advance knowledge of Crops.</p>
-              <a href=''>click here</a>
+              <Link to="">AI Service</Link>
             </div>
             
             <div className="service-box">
               <img src="icons/branding.svg" alt="Branding" />
               <h3>Crop's Health</h3>
               <p>With this feature you check the helath of your crop's.</p>
-              <a href=''>click here</a>
+              <Link to="">Crops health</Link>
             </div>
             
             <div className="service-box">
               <img src="icons/development.svg" alt="Development" />
               <h3>weather</h3>
               <p>From this feature we provide weather details of maximum 10 days.</p>
-              <a href=''>click here</a>
+              <Link to="">Weather</Link>
             </div>
             
             <div className="service-box">
               <img src="icons/web-design.svg" alt="Web Design" />
               <h3>Crop eductaion</h3>
               <p>From this feature you get education about crops from farmers through video.</p>
-              <a href=''>click here</a>
+              <Link to="">Education</Link>
             </div>
            
           </div>
