@@ -1,105 +1,68 @@
-import React from "react";
+import React, { useState } from 'react';
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 import "../styles.css";
 
-const Services = () => {
-  // Click handler for service buttons
-  const handleServiceClick = (serviceName) => {
-    console.log(`${serviceName} button clicked!`);
-  };
-
+const Service = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    
+      const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+      };
   return (
-    <div>
-      {/* Header Section */}
-      <header className="header">
-        <div className="container">
-          <h1>Our Services</h1>
-          <p>Explore the wide range of services we offer to cater to your needs.</p>
-        </div>
-      </header>
+    
+   
+   <div className="container">
+         <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div className="layout">
+        <Sidebar isSidebarOpen={isSidebarOpen} />
+        <main className={`home ${isSidebarOpen ? 'with-sidebar' : 'without-sidebar'}`}>
+ 
 
-      {/* Services Section */}
-      <main className="services-section">
-        <div className="container">
-          <div className="services-grid">
-            {/* Service Cards */}
-            <div className="service-card">
-              <i className="fas fa-code service-icon"></i>
-              <h2>Web Development</h2>
-              <p>Build responsive and engaging websites tailored to your business needs.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("Web Development")}
-              >
-                Learn More
-              </button>
+        <section className="section" >
+          <h2>Our Services</h2>
+          <p>Consectetur adipiscing elit nullam nunc justo sagittis suscipit ultrices.</p>
+          <div className="services-container">
+            
+            <div className="service-box">
+              <img src="icons/strategy.svg" alt="Strategy" />
+              <h3>AI service</h3>
+              <p>In this service we provide you advance knowledge of Crops.</p>
+              <a href=''>click here</a>
             </div>
-            <div className="service-card">
-              <i className="fas fa-mobile-alt service-icon"></i>
-              <h2>App Development</h2>
-              <p>Create feature-rich mobile apps with seamless performance across devices.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("App Development")}
-              >
-                Learn More
-              </button>
+            
+            <div className="service-box">
+              <img src="icons/branding.svg" alt="Branding" />
+              <h3>Crop's Health</h3>
+              <p>With this feature you check the helath of your crop's.</p>
+              <a href=''>click here</a>
             </div>
-            <div className="service-card">
-              <i className="fas fa-bullhorn service-icon"></i>
-              <h2>Digital Marketing</h2>
-              <p>Boost your brand’s online presence with expert SEO and social media strategies.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("Digital Marketing")}
-              >
-                Learn More
-              </button>
+            
+            <div className="service-box">
+              <img src="icons/development.svg" alt="Development" />
+              <h3>weather</h3>
+              <p>From this feature we provide weather details of maximum 10 days.</p>
+              <a href=''>click here</a>
             </div>
-            <div className="service-card">
-              <i className="fas fa-paint-brush service-icon"></i>
-              <h2>Graphic Design</h2>
-              <p>Design visually stunning graphics that leave a lasting impression.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("Graphic Design")}
-              >
-                Learn More
-              </button>
+            
+            <div className="service-box">
+              <img src="icons/web-design.svg" alt="Web Design" />
+              <h3>Crop eductaion</h3>
+              <p>From this feature you get education about crops from farmers through video.</p>
+              <a href=''>click here</a>
             </div>
-            <div className="service-card">
-              <i className="fas fa-cloud service-icon"></i>
-              <h2>Cloud Solutions</h2>
-              <p>Secure and scalable cloud solutions to drive your business growth.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("Cloud Solutions")}
-              >
-                Learn More
-              </button>
-            </div>
-            <div className="service-card">
-              <i className="fas fa-lightbulb service-icon"></i>
-              <h2>Consulting</h2>
-              <p>Get expert advice to transform your ideas into actionable solutions.</p>
-              <button
-                className="service-btn"
-                onClick={() => handleServiceClick("Consulting")}
-              >
-                Learn More
-              </button>
-            </div>
+           
           </div>
-        </div>
-      </main>
+          {/* <div className="learn-more">
+            <a href="#">Learn More</a>
+          </div> */}
+        </section>
 
-      {/* Footer Section */}
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; 2025 Your Company Name. All rights reserved.</p>
-        </div>
-      </footer>
+ 
+      </main>
+    </div>
     </div>
   );
 };
 
-export default Services;
+export default Service;

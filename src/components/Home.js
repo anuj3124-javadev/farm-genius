@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
+// import { Line } from 'react-chartjs-2';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import '../styles.css';
