@@ -126,3 +126,46 @@ body, html {
     gap: 10px;
   }
   
+  /* Services Section */
+.services-section {
+  padding: 50px 0;
+  background-color: #f4f4f4;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card h2 {
+  font-size: 1.5rem;
+  margin: 15px 0;
+  color: #6C63FF;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Service Icon Styling */
+.service-icon {
+  font-size: 3rem;
+  color: #6C63FF;
+  margin-bottom: 10px;
+}
