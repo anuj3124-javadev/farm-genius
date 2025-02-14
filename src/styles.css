@@ -164,12 +164,14 @@ main {
 .section h2 {
   font-size: 2rem;
   color: #333;
+  text-align: center;
 }
 
 .section p {
   font-size: 1.1rem;
   color: #666;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 /* Services Grid */
@@ -218,9 +220,10 @@ main {
 /* Learn More Button */
 .learn-more {
   margin-top: 30px;
+  text-align: center;
 }
 
-.learn-more a {
+.learn-more Link { 
   text-decoration: none;
   font-size: 18px;
   color: #00bcd4;
@@ -231,7 +234,7 @@ main {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-.learn-more a:hover {
+.learn-more Link:hover {
   background: #00bcd4;
   color: #fff;
 }
