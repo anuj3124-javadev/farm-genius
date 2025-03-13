@@ -17,7 +17,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           <FaCogs className="menu-icon" />
           {isSidebarOpen && <span>Services</span>}
         </li>
-        <li onClick={() => navigate('/Weather.js')}>
+        <li onClick={() => navigate('/Weather')}>
           <FaCloudRain className="menu-icon" />
           {isSidebarOpen && <span>Weather</span>}
         </li>

@@ -47,6 +47,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
               <Route path="/weather" element={<Weather />} />
+
             </Routes>
           </main>
         </div>
