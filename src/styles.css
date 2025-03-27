@@ -3,12 +3,14 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    overflow: hidden;
   }
   
   .App {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow: hidden;
   }
   
   /* Header Styles */
@@ -23,6 +25,7 @@ body, html {
     top: 0;
     width: 98%;
     z-index: 10;
+    overflow: hidden;
   }
   
   .header-title {
@@ -78,6 +81,7 @@ body, html {
   .layout {
     display: flex;
     margin-top: 50px;
+    overflow: hidden;
   }
   
   .home {
@@ -138,6 +142,7 @@ body, html {
 .layout {
   display: flex;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 main {
@@ -245,6 +250,7 @@ main {
   background-color: #f9fafb;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+  overflow: hidden;
   text-align: center;
 }
 
@@ -284,7 +290,7 @@ main {
 }
 
 .weather-info {
-  background-color: #ffffff;
+  background-color: black;
   padding: 20px;
   margin: 0 auto;
   width: 400px;
@@ -300,7 +306,7 @@ main {
 
 .weather-description {
   font-size: 18px;
-  color: #6b7280;
+  color: black;
   margin-bottom: 15px;
   text-transform: capitalize;
 }
@@ -310,4 +316,123 @@ main {
   margin: 5px 0;
 }
 
+/* Login Page Styling */
+.login-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  height: 100vh;
+  background: white; /* Purple Background */
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animated Login Form */
+.login-form {
+  background: #8A2BE2;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  width: 320px;
+  text-align: center;
+  animation: slideIn 0.8s ease-in-out;
+}
+
+/* Form Heading */
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #8A2BE2;
+}
+
+/* Input Fields */
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Forgot Password */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.forgot-password a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Login Button */
+.login-btn {
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-btn:hover {
+  background: white;
+  color: #8A2BE2;
+}
+
+/* Sign Up Link */
+.signup-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-link a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+      transform: translateY(-50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
 

@@ -1,28 +1,38 @@
-import React, { useState } from 'react';
-import "../styles.css"; 
+import React, { useState } from "react";
+import "../styles.css";
 
 const Weather = () => {
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSearch = async () => {
-    if (!city) return;
+    if (!city) {
+      alert("Please enter a city name!");
+      return;
+    }
 
-    const apiKey = 'YOUR_API_KEY'; // our API key
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/?city=${city}`;
 
     try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      if (data.cod === 200) {
-        setWeatherData(data);
-      } else {
-        setWeatherData(null);
-        alert('City not found!');
+      if (!response.ok) {
+        throw new Error("City not found or API error!");
       }
+
+      const data = await response.json();
+      setWeatherData(data);
+      setError(null);
     } catch (error) {
-      console.error('Error fetching weather data:', error);
+      console.error("Error fetching weather data:", error);
+      setError("Could not fetch weather data. Try again.");
+      setWeatherData(null);
     }
   };
 
@@ -43,14 +53,16 @@ const Weather = () => {
         </button>
       </div>
 
+      {error && <p className="weather-error">{error}</p>}
+
       {weatherData && (
         <div className="weather-info">
           <h2 className="weather-city">{weatherData.name}</h2>
-          <p className="weather-description">{weatherData.weather[0].description}</p>
+          <p className="weather-description">{weatherData.weather?.[0]?.description}</p>
           <div className="weather-details">
-            <p>Temperature: {weatherData.main.temp}°C</p>
-            <p>Humidity: {weatherData.main.humidity}%</p>
-            <p>Wind Speed: {weatherData.wind.speed} m/s</p>
+            <p>Temperature: {weatherData.main?.temp}°C</p>
+            <p>Humidity: {weatherData.main?.humidity}%</p>
+            <p>Wind Speed: {weatherData.wind?.speed} m/s</p>
           </div>
         </div>
       )}

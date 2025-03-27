@@ -1,56 +1,50 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Login Successful!");
+    alert("Login clicked! Implement login logic here.");
   };
 
   return (
-    <div className="login-container">
-      <h1 className="title">Animated Login Form</h1>
-      <div className="login-box">
-        <h2>Login Here</h2>
+    <div className="login-page">
+      <div className="login-form">
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <button type="submit">SUBMIT</button>
+          <div className="input-group">
+            <label>Email or Username</label>
+            <input
+              type="text"
+              placeholder="Enter Email or Username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="forgot-password">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
+          <button type="submit" className="login-btn">Login</button>
+          <div className="signup-link">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </div>
         </form>
       </div>
-      <footer>© 2024 Animated Login Form | Design by W3layouts</footer>
     </div>
   );
 };
