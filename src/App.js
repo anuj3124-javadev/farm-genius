@@ -7,55 +7,71 @@ import Services from './components/Services';
 import Weather from './components/Weather';
 import Login from './components/Login';
 import Ai from './components/Ai'; // Import AI component
-
 import './styles.css';
 
+// ✅ Main Layout Component (For Pages with Sidebar & Header)
+const MainLayout = ({ children, isSidebarOpen, toggleSidebar }) => {
+  return (
+    <>
+      <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div className="layout">
+        <Sidebar isSidebarOpen={isSidebarOpen} />
+        <main className={`content ${isSidebarOpen ? 'with-sidebar' : 'without-sidebar'}`}>
+          {children}
+        </main>
+      </div>
+    </>
+  );
+};
+
+// ✅ App Component
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleLoginClick = () => {
-    setIsLoginOpen(true);
-  };
-
-  const handleCloseLogin = () => {
-    setIsLoginOpen(false);
-  };
-
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    setIsLoginOpen(false);
-  };
-
   return (
     <Router>
-      <div className="app-container">
-        <Header 
-          isSidebarOpen={isSidebarOpen} 
-          toggleSidebar={toggleSidebar} 
-          isLoggedIn={isLoggedIn} 
-          onLoginClick={handleLoginClick} 
+      <Routes>
+        {/* ✅ Pages with Header & Sidebar */}
+        <Route
+          path="/"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Home />
+            </MainLayout>
+          }
         />
-        <div className="layout">
-          <Sidebar isSidebarOpen={isSidebarOpen} />
-          <main className={`content ${isSidebarOpen ? 'with-sidebar' : 'without-sidebar'}`}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/ai-service" element={<Ai />} />
-              <Route path="/weather" element={<Weather />} />
-              <Route path="/login" element={<Login />} />
+        <Route
+          path="/services"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Services />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/ai-service"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Ai />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/weather"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Weather />
+            </MainLayout>
+          }
+        />
 
-            </Routes>
-          </main>
-        </div>
-        {isLoginOpen && <Login onClose={handleCloseLogin} onLogin={handleLoginSuccess} />}
-      </div>
+        {/* ✅ Login Page (WITHOUT Header & Sidebar) */}
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </Router>
   );
 }
