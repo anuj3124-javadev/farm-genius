@@ -29,7 +29,8 @@ const Service = () => {
               <img src="/images/AI-service.jpg" alt="AI service" />
               <h3>AI service</h3>
               <p>In this service we provide you advance knowledge of Crops.</p>
-              <Link to="/src/components/Ai.js">AI Service</Link>
+              <Link to="/ai-service">AI Service</Link>
+
             </div>
             
             <div className="service-box">

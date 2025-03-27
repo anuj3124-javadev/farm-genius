@@ -12,27 +12,30 @@ const Weather = () => {
       return;
     }
 
-    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`;
+    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`; // Ensure this is correct
 
     try {
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: "POST", // Change to "GET" if needed
         headers: {
           "Content-Type": "application/json",
         },
-        body:{
-          "location":"moradabad",
-        },
+        body: JSON.stringify({
+          location: "Moradabad",
+        }),
       });
 
       if (!response.ok) {
+        alert("Response is not Ok")
         throw new Error("City not found or API error!");
-      }
+      }else{alert("Response is Ok")}
 
       const data = await response.json();
       setWeatherData(data);
       setError(null);
+      alert("Everything is going perfect");
     } catch (error) {
+      alert("Error");
       console.error("Error fetching weather data:", error);
       setError("Could not fetch weather data. Try again.");
       setWeatherData(null);

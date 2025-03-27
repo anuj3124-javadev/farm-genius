@@ -3,14 +3,14 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   
   .App {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden;
+    
   }
   
   /* Header Styles */
@@ -436,3 +436,117 @@ main {
   }
 }
 
+
+/* Ai.js CSS */
+/* Main Container */
+.ai-container {
+  max-width: 600px;
+  margin: auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.ai-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* File Upload */
+.ai-upload {
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  background: #f8f9fa;
+  transition: 0.3s;
+}
+
+.ai-upload:hover {
+  background: #e9ecef;
+}
+
+/* Image Preview Container */
+.ai-image-preview {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ddd;
+}
+
+.ai-image-preview img {
+  width: 250px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.ai-image-preview img:hover {
+  transform: scale(1.1);
+}
+
+/* Text Area */
+.ai-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 13px;
+  resize: none;
+  background: #f8f9fa;
+  transition: border 0.3s;
+}
+
+.ai-textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Input Fields */
+.ai-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 5px;
+  background: #f8f9fa;
+  transition: border 0.3s;
+}
+
+.ai-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button */
+.ai-button {
+  width: 100spx;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: #007bff;
+  border: none;
+  border-radius: 8px;
+  margin-top: 5px;
+  cursor: pointer;
+  margin-left: 43%;
+  transition: background 0.3s ease;
+}
+
+.ai-button:hover {
+  background: #0056b3;
+}

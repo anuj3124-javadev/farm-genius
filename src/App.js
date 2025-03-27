@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Services from './components/Services';
 import Weather from './components/Weather';
 import Login from './components/Login';
+import Ai from './components/Ai'; // Import AI component
 
 import './styles.css';
 
@@ -46,6 +47,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/ai-service" element={<Ai />} />
               <Route path="/weather" element={<Weather />} />
               <Route path="/login" element={<Login />} />
 
