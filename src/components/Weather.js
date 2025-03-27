@@ -12,13 +12,16 @@ const Weather = () => {
       return;
     }
 
-    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/?city=${city}`;
+    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`;
 
     try {
       const response = await fetch(apiUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
+        },
+        body:{
+          "location":"moradabad",
         },
       });
 
