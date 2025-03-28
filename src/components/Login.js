@@ -1,20 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // For redirecting after login
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Login clicked! Implement login logic here.");
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("https://new-api.productsscout.in/public/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+           "userEmail": "email",
+           "userPassword": "password" }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token); // Save token for authentication
+        alert("Login Successful!");
+        navigate("/"); // Redirect to homepage after login
+      } else {
+        setError(data.message || "Invalid email or password.");
+      }
+    } catch (error) {
+      setError("Something went wrong. Please try again.");
+    }
+
+    setLoading(false);
   };
 
   return (
     <div className="login-page">
       <div className="login-form">
         <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Email or Username</label>
@@ -39,7 +68,9 @@ const Login = () => {
           <div className="forgot-password">
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
-          <button type="submit" className="login-btn">Login</button>
+          <button type="submit" className="login-btn" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
           <div className="signup-link">
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </div>
