@@ -43,6 +43,7 @@ const Registration = () => {
       seller: "https://new-api.productsscout.in/public/register-seller",
     };
 
+    // Prepare request body with correct field names
     const requestBody = {
       [`${formData.role}Name`]: formData.name,
       [`${formData.role}Email`]: formData.email,
@@ -60,38 +61,38 @@ const Registration = () => {
     }
 
     try {
+      console.log("Sending request to:", roleEndpoints[formData.role]);
+      console.log("FormData content:", [...formDataObj.entries()]); // Debugging
+
       const response = await fetch(roleEndpoints[formData.role], {
         method: "POST",
         body: formDataObj,
       });
 
-      // Check if the response is valid JSON
-      const contentType = response.headers.get("Content-Type");
+      console.log("Response status:", response.status);
 
-      let result = null;
+      
+      const contentType = response.headers.get("Content-Type");
+      let result;
       if (contentType && contentType.includes("application/json")) {
-        result = await response.json(); // Parse JSON only if it's JSON data
+        result = await response.json();
       } else {
-        // Handle cases where the response is not JSON
-        const text = await response.text(); // Get raw text
-        console.log(text); // Log for debugging
-        result = { message: text }; // Use raw text as message
+        result = { message: await response.text() };
       }
+
+      console.log("Server Response:", result);
 
       if (response.ok) {
         alert("Registration Successful!");
-        console.log("Response status:", response.status);
         navigate("/login");
       } else {
-        alert("Registration Failed: " + (result.message || "Unknown error"));        
-        console.log("Response headers:", response.headers);
+        alert("Registration Failed: " + (result.message || "Unknown error"));
       }
     } catch (error) {
-      alert("Error: " + error.message);
-      
+      console.error("Error:", error);
+      alert("Network or Server Error: " + error.message);
     }
-};
-
+  };
 
   return (
     <div className="reg-container fadeIn">
