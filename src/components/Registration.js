@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../styles.css";
 
 const Registration = () => {
@@ -37,36 +36,62 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const apiEndpoints = {
-      farmer: "https://new-api.productsscout.in/register-farmer",
-      buyer: "https://new-api.productsscout.in/register-buyer",
-      seller: "https://new-api.productsscout.in/register-seller",
+
+    const roleEndpoints = {
+      farmer: "https://new-api.productsscout.in/public/register-farmer",
+      buyer: "https://new-api.productsscout.in/public/register-buyer",
+      seller: "https://new-api.productsscout.in/public/register-seller",
     };
-    
-    const roleKey = formData.role;
-    const apiUrl = apiEndpoints[roleKey];
-    
-    const formDataToSend = new FormData();
-    formDataToSend.append(`${roleKey}Name`, formData.name);
-    formDataToSend.append(`${roleKey}Email`, formData.email);
-    formDataToSend.append(`${roleKey}Password`, formData.password);
-    formDataToSend.append(`${roleKey}ProfilePic`, formData.profile);
-    formDataToSend.append(`${roleKey}Contact`, formData.contact);
-    formDataToSend.append(`${roleKey}Address`, formData.address);
-    
-    try {
-      const response = await axios.post(apiUrl, formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      console.log("Registration Successful:", response.data);
-      alert("Registration Successful!");
-      navigate("/login");
-    } catch (error) {
-      console.error("Registration Failed:", error.response?.data || error.message);
-      alert("Registration Failed! Please try again.");
+
+    const requestBody = {
+      [`${formData.role}Name`]: formData.name,
+      [`${formData.role}Email`]: formData.email,
+      [`${formData.role}Password`]: formData.password,
+      [`${formData.role}Contact`]: formData.contact,
+      [`${formData.role}Address`]: formData.address,
+    };
+
+    const formDataObj = new FormData();
+    for (const key in requestBody) {
+      formDataObj.append(key, requestBody[key]);
     }
-  };
+    if (formData.profile) {
+      formDataObj.append(`${formData.role}ProfilePic`, formData.profile);
+    }
+
+    try {
+      const response = await fetch(roleEndpoints[formData.role], {
+        method: "POST",
+        body: formDataObj,
+      });
+
+      // Check if the response is valid JSON
+      const contentType = response.headers.get("Content-Type");
+
+      let result = null;
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json(); // Parse JSON only if it's JSON data
+      } else {
+        // Handle cases where the response is not JSON
+        const text = await response.text(); // Get raw text
+        console.log(text); // Log for debugging
+        result = { message: text }; // Use raw text as message
+      }
+
+      if (response.ok) {
+        alert("Registration Successful!");
+        console.log("Response status:", response.status);
+        navigate("/login");
+      } else {
+        alert("Registration Failed: " + (result.message || "Unknown error"));        
+        console.log("Response headers:", response.headers);
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+      
+    }
+};
+
 
   return (
     <div className="reg-container fadeIn">
