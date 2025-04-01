@@ -290,7 +290,7 @@ main {
 }
 
 .weather-info {
-  background-color: black;
+  background-color: white;
   padding: 20px;
   margin: 0 auto;
   width: 400px;
@@ -310,6 +310,19 @@ main {
   margin-bottom: 15px;
   text-transform: capitalize;
 }
+
+.weather-span1 {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.weather-span2 {
+  color: red;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
 
 .weather-details p {
   font-size: 16px;
@@ -550,3 +563,99 @@ main {
 .ai-button:hover {
   background: #0056b3;
 }
+
+/* registration CSS */
+
+.reg-container {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #8A2BE2, #4B0082);
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+h2 {
+  margin-bottom: 15px;
+  color: white;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.reg-input {
+  width: 80%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.reg-input:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px #ffcc00;
+  outline: none;
+}
+
+.reg-button {
+  width: 85%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.reg-button:hover {
+  background-color: white;
+  transform: scale(1.05);
+}
+
+.profile-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 10px;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 0 10px white;
+}
+
+.login-link {
+  margin-top: 10px;
+  color: white;
+  font-size: 16px;
+}
+
+.login-text {
+  font-weight: bold;
+  color: #ffcc00;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.login-text:hover {
+  color: #ff9900;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

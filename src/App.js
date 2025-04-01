@@ -6,7 +6,8 @@ import Home from './components/Home';
 import Services from './components/Services';
 import Weather from './components/Weather';
 import Login from './components/Login';
-import Ai from './components/Ai'; // Import AI component
+import Registration from './components/Registration'; // Import Registration Component
+import Ai from './components/Ai'; 
 import './styles.css';
 
 // ✅ Main Layout Component (For Pages with Sidebar & Header)
@@ -69,8 +70,9 @@ function App() {
           }
         />
 
-        {/* ✅ Login Page (WITHOUT Header & Sidebar) */}
+        {/* ✅ Login & Registration Pages (WITHOUT Header & Sidebar) */}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Registration />} /> {/* ✅ Add Registration Route */}
       </Routes>
     </Router>
   );

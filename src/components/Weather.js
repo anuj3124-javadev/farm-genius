@@ -3,7 +3,7 @@ import "../styles.css";
 
 const Weather = () => {
   const [city, setCity] = useState("");
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherdata, setWeatherdata] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSearch = async () => {
@@ -31,14 +31,15 @@ const Weather = () => {
       }else{alert("Response is Ok")}
 
       const data = await response.json();
-      setWeatherData(data);
+      setWeatherdata(data);
+      console.log(await data);
       setError(null);
       alert("Everything is going perfect");
     } catch (error) {
       alert("Error");
       console.error("Error fetching weather data:", error);
       setError("Could not fetch weather data. Try again.");
-      setWeatherData(null);
+      setWeatherdata(null);
     }
   };
 
@@ -61,14 +62,19 @@ const Weather = () => {
 
       {error && <p className="weather-error">{error}</p>}
 
-      {weatherData && (
+      {weatherdata && (
         <div className="weather-info">
-          <h2 className="weather-city">{weatherData.name}</h2>
-          <p className="weather-description">{weatherData.weather?.[0]?.description}</p>
+          <h2 className="weather-city">{weatherdata.location}</h2>
+          {/* <p className="weather-description">{weatherdata.weather?.[0]?.description}</p> */}
           <div className="weather-details">
-            <p>Temperature: {weatherData.main?.temp}°C</p>
-            <p>Humidity: {weatherData.main?.humidity}%</p>
-            <p>Wind Speed: {weatherData.wind?.speed} m/s</p>
+          <p><span className=".weather-span1">Date:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.date}</span></p>
+          <p><span className=".weather-span1">Max-Temp:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.max_temp}</span></p>
+          <p><span className=".weather-span1">Min-Temp:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.min_temp}</span></p>
+          <p><span className=".weather-span1">UV-Index:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.uv_index}</span></p>
+          <p><span className=".weather-span1">Precipitation:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.precipitation}</span></p>
+
+            {/* <p>Humidity: {weatherdata.main?.humidity}%</p>
+            <p>Wind Speed: {weatherdata.wind?.speed} m/s</p> */}
           </div>
         </div>
       )}

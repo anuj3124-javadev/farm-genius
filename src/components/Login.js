@@ -19,14 +19,15 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-           "userEmail": "email",
-           "userPassword": "password" }),
+          "userEmail": email,
+          "userPassword": password 
+        }),
       });
 
-      const data = await response.json();
+      const data = await response.text();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token); // Save token for authentication
+        localStorage.setItem("token", data); // Save token for authentication
         alert("Login Successful!");
         navigate("/"); // Redirect to homepage after login
       } else {
@@ -34,6 +35,7 @@ const Login = () => {
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");
+      console.log(error);
     }
 
     setLoading(false);
@@ -72,7 +74,7 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
           <div className="signup-link">
-            Don't have an account? <Link to="/signup">Sign Up</Link>
+            Don't have an account? <Link to="/signup">Sign Up</Link> {/* ✅ Link to Registration */}
           </div>
         </form>
       </div>
