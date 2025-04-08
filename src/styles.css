@@ -97,7 +97,7 @@ body, html {
     height: 300px;
     object-fit: cover;
     border-radius: 10px;
-    /* transition: opacity 1s ease-in-out; */
+    transition: opacity 1s ease-in-out;
   }
   
   .home-section {

@@ -43,35 +43,39 @@ const Registration = () => {
       seller: "https://new-api.productsscout.in/public/register-seller",
     };
 
-    // Prepare request body with correct field names
     const requestBody = {
       [`${formData.role}Name`]: formData.name,
       [`${formData.role}Email`]: formData.email,
       [`${formData.role}Password`]: formData.password,
-      [`${formData.role}Contact`]: formData.contact,
+      [`${formData.role}Phone`]: formData.contact,
       [`${formData.role}Address`]: formData.address,
     };
 
-    const formDataObj = new FormData();
-    for (const key in requestBody) {
-      formDataObj.append(key, requestBody[key]);
-    }
-    if (formData.profile) {
-      formDataObj.append(`${formData.role}ProfilePic`, formData.profile);
-    }
+    const isFileUpload = !!formData.profile;
+    let response;
 
     try {
-      console.log("Sending request to:", roleEndpoints[formData.role]);
-      console.log("FormData content:", [...formDataObj.entries()]); // Debugging
+      if (isFileUpload) {
+        const formDataObj = new FormData();
+        for (const key in requestBody) {
+          formDataObj.append(key, requestBody[key]);
+        }
+        formDataObj.append(`${formData.role}ProfilePic`, formData.profile);
 
-      const response = await fetch(roleEndpoints[formData.role], {
-        method: "POST",
-        body: formDataObj,
-      });
+        response = await fetch(roleEndpoints[formData.role], {
+          method: "POST",
+          body: formDataObj,
+        });
+      } else {
+        response = await fetch(roleEndpoints[formData.role], {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+      }
 
-      console.log("Response status:", response.status);
-
-      
       const contentType = response.headers.get("Content-Type");
       let result;
       if (contentType && contentType.includes("application/json")) {
@@ -79,8 +83,6 @@ const Registration = () => {
       } else {
         result = { message: await response.text() };
       }
-
-      console.log("Server Response:", result);
 
       if (response.ok) {
         alert("Registration Successful!");
@@ -112,7 +114,12 @@ const Registration = () => {
         <textarea name="address" placeholder="Address" value={formData.address} onChange={handleChange} className="reg-input" required></textarea>
         <button type="submit" className="reg-button">Register</button>
       </form>
-      <p className="login-link">Already have an account? <span onClick={() => navigate("/login")} className="login-text">Login here</span></p>
+      <p className="login-link">
+        Already have an account?{" "}
+        <span onClick={() => navigate("/login")} className="login-text">
+          Login here
+        </span>
+      </p>
     </div>
   );
 };

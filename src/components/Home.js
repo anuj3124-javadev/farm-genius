@@ -27,7 +27,7 @@ const Home = () => {
 
       {/* Services Section */}
       <section className="home-section">
-        <h2>Services</h2>
+       <h2 style={{ color: "black" }}>Services</h2>
         <div className="home-services">
           <div className="service-box">
               <img src="/images/AI-service.jpg" alt="AI service" />
@@ -40,13 +40,17 @@ const Home = () => {
               <p>With this feature you check the health of your crops.</p>
             </div>
 
-          <div className="service">Service 3</div>
+            <div className="service-box">
+              <img src="/images/weather.webp" alt="Development" />
+              <h3>Weather</h3>
+              <p>From this feature we provide weather details for up to 10 days.</p>
+              </div>
         </div>
       </section>
 
       {/* Govt. Policy & Scheme Section */}
       <section className="home-section">
-        <h2>Govt. Policy & Scheme</h2>
+        <h2 style={{ color: "black" }}>Govt. Policy & Scheme</h2>
         <div className="home-policies-schemes">
           <div className="policies">Policies</div>
           <div className="schemes">Schemes</div>
@@ -55,7 +59,7 @@ const Home = () => {
 
       {/* About Us Section */}
       <section className="home-section">
-        <h2>About Us</h2>
+        <h2 style={{ color: "black" }}>About Us</h2>
         <p>We are committed to providing the best services for farmers, buyers, and sellers.</p>
       </section>
     </div>

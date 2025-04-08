@@ -21,7 +21,7 @@ const Service = () => {
               <img src="/images/Crop-health.jpg" alt="Branding" />
               <h3>Crop's Health</h3>
               <p>With this feature you check the health of your crops.</p>
-              <Link to="">Crops health</Link>
+              <Link to="/src/components/Crophealth.js">Crops health</Link>
             </div>
             
             <div className="service-box">
