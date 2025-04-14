@@ -1,85 +1,74 @@
 import React, { useState } from "react";
+import "../styles.css";
 
 const Ai = () => {
-  const [images, setImages] = useState([]);
-  const [description, setDescription] = useState("");
-  const [landSize, setLandSize] = useState("");
-  const [seedRequirement, setSeedRequirement] = useState("");
-  const [production, setProduction] = useState("");
-  const [price, setPrice] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    if (files.length + images.length > 3) {
-      alert("You can only upload up to 3 images.");
-      return;
+  const handleSend = async () => {
+    if (input.trim() === "") return;
+
+    const userMessage = { text: input, sender: "user" };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://ml.productsscout.xyz/api/chat/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+
+      const data = await response.json();
+      const aiMessage = { text: data?.response || "No response", sender: "ai" };
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error("API Error:", error);
+      setMessages((prev) => [
+        ...prev,
+        { text: "Error: Unable to connect to AI.", sender: "ai" },
+      ]);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const imagePreviews = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...imagePreviews]);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
   };
 
   return (
-    <div className="ai-container">
-      <h2 className="ai-title">Upload Images & Enter Details</h2>
-
-      {/* Image Upload */}
-      <label className="ai-upload">
-        Click to Upload Images (Max 3)
-        <input type="file" accept="image/*" multiple onChange={handleImageUpload} hidden />
-      </label>
-
-      {/* Image Preview */}
-      {images.length > 0 && (
-        <div className="ai-image-preview">
-          {images.map((src, index) => (
-            <img key={index} src={src} alt={`Preview ${index + 1}`} />
-          ))}
-        </div>
-      )}
-
-      {/* Description Section */}
-      <div className="grid gap-4">
+    <div className="chat-container">
+      <div className="chat-output">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`chat-message ${msg.sender === "user" ? "user" : "ai"}`}
+          >
+            {msg.text}
+          </div>
+        ))}
+        {loading && (
+          <div className="chat-message ai typing">Typing...</div>
+        )}
+      </div>
+      <div className="chat-input-container">
         <textarea
-          placeholder="Enter image description..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="ai-textarea"
+          className="chat-input"
+          placeholder="Send a message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          rows={1}
         />
-
-        <input
-          type="text"
-          placeholder="Land Size (in acres)"
-          value={landSize}
-          onChange={(e) => setLandSize(e.target.value)}
-          className="ai-input"
-        />
-
-        <input
-          type="text"
-          placeholder="Seed Requirement (kg)"
-          value={seedRequirement}
-          onChange={(e) => setSeedRequirement(e.target.value)}
-          className="ai-input"
-        />
-
-        <input
-          type="text"
-          placeholder="Production (in tons)"
-          value={production}
-          onChange={(e) => setProduction(e.target.value)}
-          className="ai-input"
-        />
-
-        <input
-          type="text"
-          placeholder="Current Price (per kg)"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className="ai-input"
-        />
-
-        <button className="ai-button">Submit</button>
+        <button className="chat-send" onClick={handleSend}>
+          ➤
+        </button>
       </div>
     </div>
   );
