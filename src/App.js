@@ -7,7 +7,8 @@ import Services from './components/Services';
 import Weather from './components/Weather';
 import Login from './components/Login';
 import Registration from './components/Registration'; // Import Registration Component
-import Ai from './components/Ai'; 
+import Ai from './components/Ai';
+import Crophealth from './components/Crophealth'; 
 import './styles.css';
 
 // ✅ Main Layout Component (For Pages with Sidebar & Header)
@@ -61,6 +62,16 @@ function App() {
             </MainLayout>
           }
         />
+
+        <Route
+          path="/crop-health"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Crophealth />
+            </MainLayout>
+          }
+        />
+
         <Route
           path="/weather"
           element={
