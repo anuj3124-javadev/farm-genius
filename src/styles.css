@@ -547,7 +547,7 @@ main {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #007bff;
+  background-color: #8A2BE2;
   color: white;
   width: 55px;
   height: 55px;
@@ -561,7 +561,7 @@ main {
 }
 
 .chat-float-button:hover {
-  background-color: #0056b3;
+  background-color: #8A2BE2;
   text-decoration: none;
 }
 
