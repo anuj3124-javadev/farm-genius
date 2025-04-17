@@ -10,6 +10,8 @@ import Registration from './components/Registration'; // Import Registration Com
 import Ai from './components/Ai';
 import Crophealth from './components/Crophealth'; 
 import './styles.css';
+import CropEducation from './components/Cropeducation';
+import Chatbtn from './components/Chatbtn';
 
 // ✅ Main Layout Component (For Pages with Sidebar & Header)
 const MainLayout = ({ children, isSidebarOpen, toggleSidebar }) => {
@@ -73,6 +75,24 @@ function App() {
         />
 
         <Route
+          path="/crop-edu"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <CropEducation/>
+            </MainLayout>
+          }
+        />
+
+         <Route
+          path="/Chat"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Chatbtn/>
+            </MainLayout>
+          }
+        />
+
+        <Route
           path="/weather"
           element={
             <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
@@ -85,6 +105,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} /> {/* ✅ Add Registration Route */}
       </Routes>
+
+      <Chatbtn />
+      
     </Router>
   );
 }

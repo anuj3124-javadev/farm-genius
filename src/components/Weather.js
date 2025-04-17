@@ -21,7 +21,7 @@ const Weather = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          location: "Moradabad",
+          location: city,
         }),
       });
 

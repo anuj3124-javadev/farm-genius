@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles.css";
 import ReactMarkdown from 'react-markdown';
 
-const Ai = () => {
+const CropEducation = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ const Ai = () => {
 
     try {
       console.log('entring into try block');
-      const response = await fetch("http://ml.productsscout.xyz/api/chat/", {
+      const response = await fetch("http://ml.productsscout.xyz/api/crop-details-chatbot/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
@@ -80,4 +80,4 @@ const Ai = () => {
   );
 };
 
-export default Ai;
+export default CropEducation;

@@ -28,14 +28,15 @@ const Service = () => {
               <img src="/images/weather.webp" alt="Development" />
               <h3>Weather</h3>
               <p>From this feature we provide weather details for up to 10 days.</p>
-              <Link to="">Weather</Link>
+              <Link to="/weather">Weather</Link>
             </div>
             
             <div className="service-box">
               <img src="/images/crop-edu.jpg" alt="Web Design" />
               <h3>Crop Education</h3>
               <p>From this feature, you get education about crops from farmers through video.</p>
-              <Link to="">Education</Link>
+              <Link to="/crop-edu">Crops Education</Link>
+
             </div>
           </div>
           <div className="learn-more">
