@@ -37,7 +37,7 @@ const Weather = () => {
       alert("Everything is going perfect");
     } catch (error) {
       alert("Error");
-      console.error("Error fetching weather data:", error);
+      
       setError("Could not fetch weather data. Try again.");
       setWeatherdata(null);
     }
