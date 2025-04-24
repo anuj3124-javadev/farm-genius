@@ -276,6 +276,7 @@ main {
 
 /* Weather Page Container */
 .weather-container {
+  margin-top: 10px;
   padding: 30px;
   background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
   min-height: 100vh;
