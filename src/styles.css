@@ -1,10 +1,13 @@
 /* General Styles */
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    /* overflow: hidden; */
-  }
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+  background-attachment: fixed;
+  background-size: cover;
+}
   
   .App {
     display: flex;
@@ -18,7 +21,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #8A2BE2;
+    background: linear-gradient(135deg, #e96443, #904e95);
     color: white;
     padding: 10px 20px;
     position: fixed;
@@ -42,43 +45,59 @@ body, html {
   }
   
   /* Sidebar Styles */
-  .sidebar {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    background: #222;
-    color: white;
-    height: calc(100% - 50px);
-    width: 60px;
-    overflow: hidden;
-    transition: width 0.3s ease;
-  }
-  
-  .sidebar.open {
-    width: 200px;
-    
-  }
-  
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar-menu li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 10px;
-    cursor: pointer;
-  }
-  
-  .menu-icon {
-    font-size: 20px;
-  }
+  /* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  height: calc(100% - 50px);
+  width: 60px;
+  background: linear-gradient(180deg, #434343, #000000);
+  color: white;
+  overflow: hidden;
+  transition: width 0.4s ease, background-color 0.4s ease;
+  z-index: 9;
+}
+
+/* When Sidebar is Open */
+.sidebar.open {
+  width: 200px;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sidebar-menu li:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Menu Icon */
+.menu-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open .menu-icon {
+  transform: rotate(360deg);
+}
+
   
   /* Home Styles */
   .home-layout {
+    /* background-color: white; */
     width: 100%;
     max-width: 1200px;
     margin: auto;
@@ -103,7 +122,7 @@ body, html {
   .home-section {
     margin-top: 30px;
     padding: 20px;
-    background: #f8f8f8;
+    /* background: #f8f8f8; */
     border-radius: 10px;
   }
   
@@ -117,7 +136,7 @@ body, html {
     flex: 1;
     margin: 10px;
     padding: 15px;
-    background: white;
+    /* background: white; */
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   }
@@ -225,7 +244,7 @@ main {
 .service-box h3 {
   font-size: 1.4rem;
   margin: 15px 0;
-  color: #6C63FF;
+  color: #000000;
 }
 
 .service-box p {
@@ -257,39 +276,45 @@ main {
 
 /* Weather Page Container */
 .weather-container {
-  padding: 20px;
-  background-color: #f9fafb;
+  padding: 30px;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
   min-height: 100vh;
   font-family: Arial, sans-serif;
   overflow: hidden;
   text-align: center;
+  color: #333;
 }
 
 .weather-title {
   font-size: 32px;
-  color: #1f2937;
+  color: #111;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-.weather-search-box {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
+.weather-info {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  margin: 0 auto;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .weather-input {
   padding: 10px;
   font-size: 16px;
   width: 300px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #ccc;
   border-radius: 5px 0 0 5px;
   outline: none;
+  background-color: white;
 }
 
 .weather-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #3b82f6;
+  background-color: #e96443;
   color: white;
   border: none;
   border-radius: 0 5px 5px 0;
@@ -297,47 +322,33 @@ main {
 }
 
 .weather-button:hover {
-  background-color: #2563eb;
-}
-
-.weather-info {
-  background-color: white;
-  padding: 20px;
-  margin: 0 auto;
-  width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #d44626;
 }
 
 .weather-city {
   font-size: 24px;
-  color: #111827;
+  font-weight: bold;
   margin-bottom: 10px;
+  color: #111;
 }
 
 .weather-description {
   font-size: 18px;
-  color: black;
+  color: #333;
   margin-bottom: 15px;
   text-transform: capitalize;
 }
 
 .weather-span1 {
-  color: black;
+  color: #222;
   font-style: italic;
   font-weight: bold;
 }
 
 .weather-span2 {
-  color: red;
+  color: crimson;
   font-weight: bold;
   margin-left: 10px;
-}
-
-
-.weather-details p {
-  font-size: 16px;
-  margin: 5px 0;
 }
 
 /* Login Page Styling */
@@ -347,18 +358,19 @@ main {
   width: 100%;
   align-items: center;
   height: 100vh;
-  background: white; /* Purple Background */
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
   animation: fadeIn 1s ease-in-out;
 }
 
 /* Animated Login Form */
 .login-form {
-  background: #8A2BE2;
+  background: linear-gradient(135deg, #e96443, #904e95);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  width: 320px;
+  width: 350px;
   text-align: center;
+  justify-content: center;
   animation: slideIn 0.8s ease-in-out;
 }
 
@@ -366,7 +378,7 @@ main {
 .login-form h2 {
   margin-bottom: 20px;
   font-size: 24px;
-  color: #8A2BE2;
+  color: Black;
 }
 
 /* Input Fields */
@@ -383,7 +395,7 @@ main {
 }
 
 .input-group input {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -466,7 +478,7 @@ main {
   width: 100%;
   max-width: 90%;
   margin: 40px auto;
-  background: #f9f9f9;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -528,7 +540,7 @@ main {
 .chat-send {
   margin-left: 10px;
   padding: 10px 16px;
-  background-color: #8A2BE2;
+  background: linear-gradient(135deg, #e96443, #904e95);
   color: white;
   border: none;
   border-radius: 8px;
@@ -547,7 +559,7 @@ main {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #8A2BE2;
+  background: linear-gradient(135deg, #e96443, #904e95);
   color: white;
   width: 55px;
   height: 55px;
@@ -575,8 +587,9 @@ main {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #8A2BE2, #4B0082);
+  background: linear-gradient(135deg, #e96443, #904e95);
   text-align: center;
+  justify-content: center;
   animation: fadeIn 1s ease-in-out;
 }
 
