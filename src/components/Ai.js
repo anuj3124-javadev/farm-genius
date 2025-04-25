@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles.css";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 const Ai = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatOutputRef = useRef(null); // ✅ Ref for chat output
+
+  // ✅ Auto-scroll when messages update
+  useEffect(() => {
+    if (chatOutputRef.current) {
+      chatOutputRef.current.scrollTop = chatOutputRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const handleSend = async () => {
     if (input.trim() === "") return;
@@ -16,20 +24,22 @@ const Ai = () => {
     setLoading(true);
 
     try {
-      console.log('Entering try block');
       const response = await fetch("http://ml.productsscout.xyz/api/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
-      })
+      });
 
-      if(response.ok){
+      if (response.ok) {
         const data = await response.json();
-        const aiMessage = { text: data ? data.response : 'No Response', sender: "ai" };
+        const aiMessage = {
+          text: data ? data.response : "No Response",
+          sender: "ai",
+        };
         setMessages((prev) => [...prev, aiMessage]);
       }
     } catch (error) {
-      console.log("API Error: " + error);
+      console.error("API Error: ", error);
       setMessages((prev) => [
         ...prev,
         { text: "Error: Unable to connect to AI.", sender: "ai" },
@@ -48,7 +58,7 @@ const Ai = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-output">
+      <div className="chat-output" ref={chatOutputRef}>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -57,9 +67,7 @@ const Ai = () => {
             <ReactMarkdown>{msg.text}</ReactMarkdown>
           </div>
         ))}
-        {loading && (
-          <div className="chat-message ai typing">Typing...</div>
-        )}
+        {loading && <div className="chat-message ai typing">Typing...</div>}
       </div>
       <div className="chat-input-container">
         <textarea

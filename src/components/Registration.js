@@ -98,13 +98,17 @@ const Registration = () => {
 
   return (
     <div className="reg-container fadeIn">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit} className="form-animated">
+    <h2>Sign Up</h2>
+    <form onSubmit={handleSubmit} className="form-animated">
+      <div className="form-column">
         <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="reg-input" required />
         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="reg-input" required />
         <input type="file" accept="image/*" onChange={handleFileChange} className="reg-input" />
         {preview && <img src={preview} alt="Preview" className="profile-preview" />}
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="reg-input" required />
+      </div>
+
+      <div className="form-column">
         <select name="role" value={formData.role} onChange={handleChange} className="reg-input">
           <option value="farmer">Farmer</option>
           <option value="buyer">Buyer</option>
@@ -113,15 +117,15 @@ const Registration = () => {
         <input type="text" name="contact" placeholder="Contact" value={formData.contact} onChange={handleChange} className="reg-input" required />
         <textarea name="address" placeholder="Address" value={formData.address} onChange={handleChange} className="reg-input" required></textarea>
         <button type="submit" className="reg-button">Register</button>
-      </form>
-      <p className="login-link">
-        Already have an account?{" "}
-        <span onClick={() => navigate("/login")} className="login-text">
-          Login here
-        </span>
-      </p>
-    </div>
-  );
+      </div>
+    </form>
+    <p className="login-link">
+      Already have an account?{" "}
+      <span onClick={() => navigate("/login")} className="login-text">
+        Login here
+      </span>
+    </p>
+  </div>  );
 };
 
 export default Registration;
