@@ -16,7 +16,7 @@ const Ai = () => {
     setLoading(true);
 
     try {
-      console.log('entring into try block');
+      console.log('Entering try block');
       const response = await fetch("http://ml.productsscout.xyz/api/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ const Ai = () => {
 
       if(response.ok){
         const data = await response.json();
-        const aiMessage = { text: data ? data.response :'No Response' , sender: "ai" };
+        const aiMessage = { text: data ? data.response : 'No Response', sender: "ai" };
         setMessages((prev) => [...prev, aiMessage]);
       }
     } catch (error) {
@@ -48,10 +48,8 @@ const Ai = () => {
 
   return (
     <div className="chat-container">
-
       <div className="chat-output">
         {messages.map((msg, index) => (
-          
           <div
             key={index}
             className={`chat-message ${msg.sender === "user" ? "user" : "ai"}`}

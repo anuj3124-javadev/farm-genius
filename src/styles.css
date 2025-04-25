@@ -491,24 +491,26 @@ main {
   position: relative;
   width: 100%;
   max-width: 90%;
-  height: 90vh;
-  margin: 20px auto;
-  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+  height: 84vh;
+  margin: 40px auto;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1); 
+  margin-top: 60px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   font-family: "Segoe UI", sans-serif;
-}
+  overflow: hidden;
+  padding-bottom: 70px; /* Ensure space at the bottom */
+ } 
 
 .chat-output {
   flex-grow: 1;
   padding: 20px;
-  padding-bottom: 80px; /* Give space for fixed input */
+  padding-bottom: 10px; /* Adjusted for proper message display */
   overflow-y: auto;
   display: flex;
-  flex-direction: column; /* ✅ default order now */
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -536,8 +538,8 @@ main {
 }
 
 .chat-input-container {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 20px; /* Adjusted for gap above input */
   left: 0;
   right: 0;
   width: 100%;
@@ -591,31 +593,7 @@ main {
   text-align: center;
   line-height: 55px;
   z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-}
-
-.chat-float-button:hover {
-  background-color: #8A2BE2;
-  text-decoration: none;
-}
-
-/* chatbtn CSS */
-
-.chat-float-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: linear-gradient(135deg, #e96443, #904e95);
-  color: white;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  font-size: 28px;
-  text-align: center;
-  line-height: 55px;
-  z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
 }
 
