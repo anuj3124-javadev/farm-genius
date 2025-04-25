@@ -1,10 +1,12 @@
+// Weather.js
 import React, { useState } from "react";
-import "../styles.css";
+import '../styles.css';
 
 const Weather = () => {
   const [city, setCity] = useState("");
   const [weatherdata, setWeatherdata] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     if (!city) {
@@ -12,41 +14,36 @@ const Weather = () => {
       return;
     }
 
-    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`; // Ensure this is correct
+    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`;
 
     try {
+      setLoading(true);
       const response = await fetch(apiUrl, {
-        method: "POST", // Change to "GET" if needed
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          location: city,
-        }),
+        body: JSON.stringify({ location: city }),
       });
 
       if (!response.ok) {
-        alert("Response is not Ok")
         throw new Error("City not found or API error!");
-      }else{alert("Response is Ok")}
+      }
 
       const data = await response.json();
       setWeatherdata(data);
-      console.log(await data);
       setError(null);
-      alert("Everything is going perfect");
     } catch (error) {
-      alert("Error");
-      console.error("Error fetching weather data:", error);
-      setError("Could not fetch weather data. Try adain.");
+      setError("Could not fetch weather data. Try again.");
       setWeatherdata(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="weather-container">
       <h1 className="weather-title">Weather Forecast</h1>
-
       <div className="weather-search-box">
         <input
           type="text"
@@ -60,21 +57,23 @@ const Weather = () => {
         </button>
       </div>
 
+      {loading && <div className="loader">Loading...</div>}
+
       {error && <p className="weather-error">{error}</p>}
 
       {weatherdata && (
         <div className="weather-info">
           <h2 className="weather-city">{weatherdata.location}</h2>
-          {/* <p className="weather-description">{weatherdata.weather?.[0]?.description}</p> */}
           <div className="weather-details">
-          <p><span className=".weather-span1">Date:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.date}</span></p>
-          <p><span className=".weather-span1">Max-Temp:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.max_temp}</span></p>
-          <p><span className=".weather-span1">Min-Temp:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.min_temp}</span></p>
-          <p><span className=".weather-span1">UV-Index:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.uv_index}</span></p>
-          <p><span className=".weather-span1">Precipitation:</span><span className="weather-span2">{weatherdata.daily_forecast[0]?.precipitation}</span></p>
-
-            {/* <p>Humidity: {weatherdata.main?.humidity}%</p>
-            <p>Wind Speed: {weatherdata.wind?.speed} m/s</p> */}
+            {weatherdata.daily_forecast.slice(0, 10).map((day, index) => (
+              <div className="weather-day-card" key={index}>
+                <p><span className="weather-span1">Date:</span> <span className="weather-span2">{day.date}</span></p>
+                <p><span className="weather-span1">Max Temp:</span> <span className="weather-span2">{day.max_temp} °C</span></p>
+                <p><span className="weather-span1">Min Temp:</span> <span className="weather-span2">{day.min_temp} °C</span></p>
+                <p><span className="weather-span1">UV Index:</span> <span className="weather-span2">{day.uv_index}</span></p>
+                <p><span className="weather-span1">Precipitation:</span> <span className="weather-span2">{day.precipitation} mm</span></p>
+              </div>
+            ))}
           </div>
         </div>
       )}

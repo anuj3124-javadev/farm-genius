@@ -274,93 +274,105 @@ main {
   color: #fff;
 }
 
-/* Weather Page Container */
+/* Weather.css */
 .weather-container {
-  margin-top: 10px;
-  padding: 30px;
-  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  text-align: center;
-  color: #333;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  margin-top: 50px;
+  background: linear-gradient(to bottom right, #6dd5ed, #2193b0);
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .weather-title {
-  font-size: 32px;
-  color: #111;
-  font-weight: bold;
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.weather-info {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  margin: 0 auto;
-  width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+.weather-search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
 }
 
 .weather-input {
-  padding: 10px;
-  font-size: 16px;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px 0 0 5px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  width: 60%;
+  font-size: 1rem;
   outline: none;
-  background-color: white;
 }
 
 .weather-button {
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #e96443;
-  color: white;
+  background-color: #ffffff;
+  color: #2193b0;
+  font-weight: bold;
   border: none;
-  border-radius: 0 5px 5px 0;
+  border-radius: 12px;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .weather-button:hover {
-  background-color: #d44626;
+  background-color: #f0f0f0;
+}
+
+.loader {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.weather-error {
+  color: #ffdddd;
+  text-align: center;
+  background: #b00020;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.weather-info {
+  text-align: center;
 }
 
 .weather-city {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #111;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.weather-description {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 15px;
-  text-transform: capitalize;
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.weather-day-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.weather-day-card:hover {
+  transform: translateY(-5px);
 }
 
 .weather-span1 {
-  color: #222;
-  font-style: italic;
   font-weight: bold;
+  color: #f9f9f9;
 }
 
 .weather-span2 {
-  color: crimson;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-/* Login Page Styling */
-.login-page {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
-  animation: fadeIn 1s ease-in-out;
+  margin-left: 5px;
+  color: #fff;
 }
 
 /* Animated Login Form */
@@ -476,9 +488,11 @@ main {
 
 /* Ai.js CSS */
 .chat-container {
+  position: relative;
   width: 100%;
   max-width: 90%;
-  margin: 40px auto;
+  height: 90vh;
+  margin: 20px auto;
   background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -491,13 +505,15 @@ main {
 .chat-output {
   flex-grow: 1;
   padding: 20px;
+  padding-bottom: 80px; /* Give space for fixed input */
   overflow-y: auto;
-  max-height: 500px;
+  display: flex;
+  flex-direction: column; /* ✅ default order now */
+  gap: 10px;
 }
 
 .chat-message {
   padding: 10px 14px;
-  margin: 6px 0;
   border-radius: 8px;
   max-width: 80%;
   word-wrap: break-word;
@@ -520,11 +536,19 @@ main {
 }
 
 .chat-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   padding: 10px;
   background: #ffffff;
   border-top: 1px solid #ddd;
+  z-index: 10;
 }
 
 .chat-input {
@@ -552,6 +576,28 @@ main {
 
 .chat-send:hover {
   background-color: #8A2BE2;
+}
+
+.chat-float-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #e96443, #904e95);
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  font-size: 28px;
+  text-align: center;
+  line-height: 55px;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.chat-float-button:hover {
+  background-color: #8A2BE2;
+  text-decoration: none;
 }
 
 /* chatbtn CSS */
@@ -676,75 +722,104 @@ h2 {
 
 /* crophealth CSS */
 
+/* Chat container */
 .ch-container {
-  max-width: 700px;
-  margin: 40px auto;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  margin: 60px auto;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   font-family: "Segoe UI", sans-serif;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 20px;
+  padding: 24px;
+  transition: 0.3s ease;
 }
 
+/* Output box */
 .ch-output {
-  max-height: 400px;
+  max-height: 450px;
   overflow-y: auto;
-  padding: 10px;
+  padding: 16px;
   margin-bottom: 20px;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  background: #ffffff;
+  /* scrollbar-width: thin;
+  scrollbar-color: #90caf9 #e3f2fd; */
 }
 
+/* Messages */
 .ch-msg {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  max-width: 90%;
+  padding: 12px 18px;
+  margin: 12px 0;
+  border-radius: 16px;
+  max-width: 85%;
   word-wrap: break-word;
   white-space: pre-wrap;
-  font-size: 15px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  transition: background 0.2s ease-in-out;
 }
 
 .ch-msg.user {
-  background-color: #e3f2fd;
+  background-color: #d0f0fd;
+  color: #0d47a1;
   align-self: flex-end;
   text-align: right;
+  box-shadow: 0 4px 8px rgba(13, 71, 161, 0.15);
 }
 
 .ch-msg.ai {
-  background-color: #f1f1f1;
+  background-color: #f4f4f4;
+  color: #333;
   align-self: flex-start;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Image previews */
 .ch-img-preview {
   width: 100px;
   height: 100px;
   object-fit: cover;
   margin: 5px 5px 5px 0;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  border-radius: 12px;
+  border: 1px solid #bbb;
+  transition: transform 0.2s;
 }
 
+.ch-img-preview:hover {
+  transform: scale(1.03);
+}
+
+/* Input area */
 .ch-input-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
+/* Text input */
 .ch-input {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
 }
 
+.ch-input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 4px #90caf9;
+}
+
+/* Image upload section */
 .ch-image-uploads {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-top: 10px;
   flex-wrap: wrap;
 }
@@ -753,20 +828,27 @@ h2 {
   display: block;
 }
 
+/* Send button */
 .ch-send-btn {
-  padding: 12px;
+  padding: 14px;
   background-color: #1976d2;
   color: white;
   font-size: 16px;
+  font-weight: 500;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .ch-send-btn:hover {
   background-color: #1565c0;
 }
+
+.ch-send-btn:active {
+  background-color: #0d47a1;
+}
+
 
 
 
