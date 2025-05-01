@@ -23,13 +23,14 @@ const Ai = () => {
     setInput("");
     setLoading(true);
 
+
     try {
-      const response = await fetch("http://ml.productsscout.xyz/api/chat/", {
+      console.log("befor fatch");
+      const response = await fetch("https://ml.productsscout.xyz/api/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ message: input }), // sending user's message
       });
-
       if (response.ok) {
         const data = await response.json();
         const aiMessage = {
@@ -37,9 +38,13 @@ const Ai = () => {
           sender: "ai",
         };
         setMessages((prev) => [...prev, aiMessage]);
+      } else {
+        throw new Error("API responded with status: " + response.status);
       }
     } catch (error) {
-      console.error("API Error: ", error);
+      console.log(JSON.stringify({ message: input }));
+      console.error("Fetch failed:", error);
+
       setMessages((prev) => [
         ...prev,
         { text: "Error: Unable to connect to AI.", sender: "ai" },
@@ -77,6 +82,7 @@ const Ai = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
+          autoFocus='true'
         />
         <button className="chat-send" onClick={handleSend}>
           ➤

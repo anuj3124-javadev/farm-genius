@@ -17,7 +17,7 @@ const CropEducation = () => {
 
     try {
       console.log('entring into try block');
-      const response = await fetch("http://ml.productsscout.xyz/api/crop-details-chatbot/", {
+      const response = await fetch("https://ml.productsscout.xyz/api/crop-details-chatbot/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
@@ -71,6 +71,7 @@ const CropEducation = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
+          autoFocus='true'
         />
         <button className="chat-send" onClick={handleSend}>
           ➤
