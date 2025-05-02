@@ -5,6 +5,8 @@ import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import Services from './components/Services';
 import Weather from './components/Weather';
+import AddProduct from './components/AddProduct';
+import CropList from './components/CropList';
 import Login from './components/Login';
 import Registration from './components/Registration'; // Import Registration Component
 import Ai from './components/Ai';
@@ -56,6 +58,27 @@ function App() {
             </MainLayout>
           }
         />
+
+        <Route
+          path="/Add-Crop"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <AddProduct />
+            </MainLayout>
+          }
+       />
+
+        <Route
+          path="/Crop-List"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <CropList />
+            </MainLayout>
+          }
+       />
+
+
+
         <Route
           path="/ai-service"
           element={
