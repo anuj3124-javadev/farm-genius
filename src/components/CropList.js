@@ -1,5 +1,6 @@
+// CropList.js
 import React, { useEffect, useState } from "react";
-import "../styles.css"; // Make sure this includes your .crop-list-container styles
+import "../styles.css";
 
 const CropList = () => {
   const [crops, setCrops] = useState([]);
@@ -9,7 +10,7 @@ const CropList = () => {
     fetch("https://new-api.productsscout.in/farmer/crops/")
       .then((res) => res.json())
       .then((data) => {
-        setCrops(data); // Adjust based on API structure
+        setCrops(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -55,10 +56,16 @@ const CropList = () => {
               <h3>{crop.product_name}</h3>
               <p>Land Size: {crop.land_size} acres</p>
               <p>Price: ₹{crop.price} per quintal</p>
+              <p>Quantity: {crop.quantity} quintals</p>
               <p>{crop.description}</p>
               <div className="crop-buttons">
                 <button className="crop-btn detail-btn">Details</button>
-                <button className="crop-btn delete-btn" onClick={() => handleDelete(crop.id)}>Delete</button>
+                <button
+                  className="crop-btn delete-btn"
+                  onClick={() => handleDelete(crop.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

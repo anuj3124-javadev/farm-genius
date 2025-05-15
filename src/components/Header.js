@@ -40,8 +40,8 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
       <div className="header-options">
         {!isLoggedIn ? (
           <>
-            <button onClick={handleLogin} className="header-btn">Login</button>
-            <button onClick={handleSignup} className="header-btn signup-btn">Signup</button>
+            <button onClick={handleLogin} className="auth-btn login">Login</button>
+            <button onClick={handleSignup} className="auth-btn signup">Signup</button>
           </>
         ) : (
           <div className="user-controls">
