@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Services from './components/Services';
 import Weather from './components/Weather';
 import AddProduct from './components/AddProduct';
+import  Dashboard from './components/Dashboard';
 import CropList from './components/CropList';
 import Login from './components/Login';
 import Registration from './components/Registration'; // Import Registration Component
@@ -25,6 +26,7 @@ const MainLayout = ({ children, isSidebarOpen, toggleSidebar }) => {
         <main className={`content ${isSidebarOpen ? 'with-sidebar' : 'without-sidebar'}`}>
           {children}
         </main>
+        <Chatbtn />
       </div>
     </>
   );
@@ -97,6 +99,16 @@ function App() {
           }
         />
 
+        
+        <Route
+          path="/dashboard"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Dashboard />
+            </MainLayout>
+          }
+        />
+
         <Route
           path="/crop-edu"
           element={
@@ -124,12 +136,19 @@ function App() {
           }
         />
 
+ v      <Route
+          path="/Chat"
+          element={
+            <MainLayout isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+              <Chatbtn />
+            </MainLayout>
+  }
+/>
+
         {/* ✅ Login & Registration Pages (WITHOUT Header & Sidebar) */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} /> {/* ✅ Add Registration Route */}
       </Routes>
-
-      <Chatbtn />
       
     </Router>
   );

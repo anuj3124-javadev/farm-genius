@@ -19,28 +19,39 @@ const AddProduct = () => {
       [name]: files ? files[0] : value,
     }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     const payload = new FormData();
-    payload.append("product_name", formData.productName);
-    payload.append("land_size", formData.landSize);
+    payload.append("cropName", formData.productName);
+    payload.append("landArea", formData.landSize);
     payload.append("price", formData.price);
     payload.append("description", formData.description);
     payload.append("photo", formData.photo);
-
+  
+    console.log("Payload content:");
+    for (let [key, value] of payload.entries()) {
+      console.log(key, value);
+    }
+  
     try {
+      const token = localStorage.getItem("token");
+  
       const response = await fetch("https://new-api.productsscout.in/farmer/addCrop/", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Note: Do NOT set 'Content-Type' when using FormData
+        },
+        body: payload,
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         alert("Crop submitted successfully!");
         console.log("Response:", result);
-        // Optional: Reset form
         setFormData({
           productName: "",
           landSize: "",
@@ -49,8 +60,14 @@ const AddProduct = () => {
           description: "",
         });
       } else {
-        const error = await response.json();
-        alert("Submission failed: " + (error.message || "Unknown error"));
+        let errorMessage = "Unknown error";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          errorMessage = "Server did not return JSON";
+        }
+        alert("Submission failed: " + errorMessage);
       }
     } catch (err) {
       alert("Error submitting form: " + err.message);
@@ -58,7 +75,7 @@ const AddProduct = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="ad-container">
       <form className="ad-form" onSubmit={handleSubmit}>
@@ -90,7 +107,7 @@ const AddProduct = () => {
           accept="image/*"
           className="ad-input-file"
           onChange={handleChange}
-          required
+          // required
         />
 
         <input

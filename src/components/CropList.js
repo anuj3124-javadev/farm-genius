@@ -6,7 +6,7 @@ const CropList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://new-api.productsscout.in/farmer/crop-list/")
+    fetch("https://new-api.productsscout.in/farmer/crops/")
       .then((res) => res.json())
       .then((data) => {
         setCrops(data); // Adjust based on API structure
@@ -23,7 +23,7 @@ const CropList = () => {
 
     try {
       const response = await fetch(
-        `https://new-api.productsscout.in/farmer/deleteCrop/${id}/`,
+        `https://new-api.productsscout.in/farmer/removeCrop/${id}/`,
         {
           method: "DELETE",
         }

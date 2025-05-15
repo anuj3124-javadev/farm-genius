@@ -1,13 +1,33 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ import navigate hook
-import { FaEllipsisV, FaBell, FaUser } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaEllipsisV, FaBell, FaSignOutAlt } from 'react-icons/fa';
 import '../styles.css';
 
 const Header = ({ isSidebarOpen, toggleSidebar }) => {
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userPhoto, setUserPhoto] = useState('');
 
-  const goToLogin = () => {
-    navigate('/Login'); // ✅ redirects to /login
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const photo = localStorage.getItem('userPhoto'); // Store this after login
+    if (token) {
+      setIsLoggedIn(true);
+      if (photo) setUserPhoto(photo);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogin = () => navigate('/login');
+  const handleSignup = () => navigate('/signup');
+  const goToDashboard = () => navigate('/dashboard'); // or '/profile'
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userPhoto');
+    setIsLoggedIn(false);
+    navigate('/login');
   };
 
   return (
@@ -16,9 +36,33 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
         {isSidebarOpen ? '✖' : <FaEllipsisV />}
       </button>
       <h1 className="header-title">Farm-genius</h1>
+
       <div className="header-options">
-        <FaBell className="icon" />
-        <FaUser className="icon" onClick={goToLogin} style={{ cursor: 'pointer' }} /> {/* ✅ clickable user icon */}
+        {!isLoggedIn ? (
+          <>
+            <button onClick={handleLogin} className="header-btn">Login</button>
+            <button onClick={handleSignup} className="header-btn signup-btn">Signup</button>
+          </>
+        ) : (
+          <div className="user-controls">
+            <FaBell className="icon" title="Notifications" />
+
+            <img
+              src={userPhoto || 'https://via.placeholder.com/35'} // fallback image
+              alt="User"
+              className="profile-pic"
+              onClick={goToDashboard}
+              title="Go to Dashboard"
+            />
+
+            <FaSignOutAlt
+              className="icon logout-icon"
+              title="Logout"
+              onClick={handleLogout}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+        )}
       </div>
     </header>
   );
