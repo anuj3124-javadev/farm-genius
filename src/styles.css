@@ -42,10 +42,13 @@ body, html {
 
 /* Logo beside the title */
 .header-logo {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  border-radius: 5px; /* Optional: remove if you want it square or round */
+  width: 50px;
+  height: 50px;
+  background-image: url('/public/real\ logo.png'); /* Put your logo image inside public folder */
+  background-size: 68px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
 }
 
 /* Sidebar toggle button */
@@ -169,7 +172,7 @@ body, html {
   /* Sidebar Styles */
 .sidebar {
   position: fixed;
-  top: 50px;
+  top: 60px;
   left: 0;
   height: calc(100% - 50px);
   width: 60px;
@@ -636,7 +639,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  background: linear-gradient(45deg, #c71585 0%, #ffffff 100%);
 }
 
 .chat-message {
@@ -1033,16 +1036,20 @@ h2 {
 /* crop-list css */
 
 .crop-list-container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
   border-radius: 20px;
   background: linear-gradient(135deg, #f0fff0, #d4f5e0);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .crop-title {
+  grid-column: 1 / -1;
   text-align: center;
   font-size: 2rem;
   margin-bottom: 30px;
@@ -1050,45 +1057,51 @@ h2 {
 }
 
 .crop-card {
-  display: flex;
-  align-items: flex-start;
   background: #ffffff;
   border-radius: 15px;
-  margin-bottom: 20px;
   padding: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .crop-card:hover {
-  transform: scale(1.01);
+  transform: scale(1.02);
 }
 
 .crop-img {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 150px;
   border-radius: 12px;
   object-fit: cover;
-  margin-right: 20px;
+  margin-bottom: 15px;
 }
 
 .crop-info h3 {
   margin: 0 0 10px;
   color: #2e7d32;
+  font-size: 1.2rem;
 }
 
 .crop-info p {
   margin: 5px 0;
   color: #444;
+  font-size: 0.95rem;
 }
 
 .crop-buttons {
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .crop-btn {
   padding: 6px 12px;
-  margin-right: 10px;
   border: none;
   border-radius: 8px;
   font-weight: bold;

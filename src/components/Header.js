@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEllipsisV, FaBell, FaSignOutAlt } from 'react-icons/fa';
 import '../styles.css';
- 
 
 const Header = ({ isSidebarOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -11,7 +10,7 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const photo = localStorage.getItem('userPhoto'); // Store this after login
+    const photo = localStorage.getItem('userPhoto');
     if (token) {
       setIsLoggedIn(true);
       if (photo) setUserPhoto(photo);
@@ -22,7 +21,7 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
 
   const handleLogin = () => navigate('/login');
   const handleSignup = () => navigate('/signup');
-  const goToDashboard = () => navigate('/dashboard'); // or '/profile'
+  const goToDashboard = () => navigate('/dashboard');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -36,13 +35,10 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
       <button className="menu-toggle" onClick={toggleSidebar}>
         {isSidebarOpen ? '✖' : <FaEllipsisV />}
       </button>
+
       <h1 className="header-title">
-        <img
-            src="/public/log1.png" // Put the correct relative or public path to your logo
-             alt="Logo"
-             className="header-logo"
-        />
-            Farm-genius
+        <div className="header-logo" />
+        Farm-genius
       </h1>
 
       <div className="header-options">
@@ -54,20 +50,17 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
         ) : (
           <div className="user-controls">
             <FaBell className="icon" title="Notifications" />
-
             <img
-              src={userPhoto || 'https://via.placeholder.com/35'} // fallback image
+              src={userPhoto || 'https://via.placeholder.com/35'}
               alt="User"
               className="profile-pic"
               onClick={goToDashboard}
               title="Go to Dashboard"
             />
-
             <FaSignOutAlt
               className="icon logout-icon"
               title="Logout"
               onClick={handleLogout}
-              style={{ cursor: 'pointer' }}
             />
           </div>
         )}

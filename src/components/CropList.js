@@ -1,20 +1,19 @@
-// CropList.js
 import React, { useEffect, useState } from "react";
 import "../styles.css";
 
 const CropList = () => {
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(true);
-const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetch("https://new-api.productsscout.in/farmer/crops", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setCrops(data);
@@ -35,9 +34,9 @@ const token = localStorage.getItem("token");
         {
           method: "DELETE",
           headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
