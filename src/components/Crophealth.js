@@ -2,98 +2,139 @@ import React, { useState } from 'react';
 import '../styles.css';
 
 const Crophealth = () => {
-  const [images, setImages] = useState([]);
-  const [preview, setPreview] = useState([]);
-  const [cropName, setCropName] = useState('');
-  const [landSize, setLandSize] = useState('');
-  const [description, setDescription] = useState('');
-  const [result, setResult] = useState(null);
+  const [formData, setFormData] = useState({
+    cropName: '',
+    quantity: '',
+    landSize: '',
+    description: '',
+  });
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files).slice(0, 3); // Limit to 3
-    setImages(files);
-    const previewUrls = files.map(file => URL.createObjectURL(file));
-    setPreview(previewUrls);
+  const [images, setImages] = useState([null, null, null]);
+  const [previews, setPreviews] = useState([null, null, null]);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const newImages = [...images];
+    newImages[index] = file;
+    setImages(newImages);
+
+    const newPreviews = [...previews];
+    newPreviews[index] = URL.createObjectURL(file);
+    setPreviews(newPreviews);
+  };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    images.forEach((img) => formData.append('images', img));
-    formData.append('cropName', cropName);
-    formData.append('landSize', landSize);
-    formData.append('description', description);
+    if (images.some((img) => img === null)) {
+      alert('Please upload all 3 images.');
+      return;
+    }
+
+    setLoading(true);
 
     try {
-      const res = await fetch('http://ml.productsscout.xyz/api/crop-details-chatbot/', {
+      const base64Images = await Promise.all(images.map((img) => toBase64(img)));
+
+      const payload = {
+        ...formData,
+        images: base64Images,
+      };
+      console.log(formData);
+      const res = await fetch('https://your-api-url.com/api/crop-disease', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
       setResult(data);
     } catch (err) {
-      console.error(err);
+      console.error('Error:', err);
+      alert('Failed to submit data.');
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="ch-container">
-      <h2 style={{ marginBottom: '20px' }}>🌿 Crop Health Analysis</h2>
-
-      <form onSubmit={handleSubmit} className="ch-input-form">
-        <label><strong>Upload Crop Images (Max 3):</strong></label>
+    <div className="cd-container">
+      <h2 className="cd-h2">🌿 Crop Disease Checker</h2>
+      <form onSubmit={handleSubmit} className="cd-form">
         <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageChange}
-          className="ch-input"
+          type="text"
+          name="cropName"
+          placeholder="Crop Name"
+          value={formData.cropName}
+          onChange={handleInputChange}
+          required
         />
+        <input
+          type="text"
+          name="quantity"
+          placeholder="Quantity"
+          value={formData.quantity}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="text"
+          name="landSize"
+          placeholder="Land Size"
+          value={formData.landSize}
+          onChange={handleInputChange}
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        ></textarea>
 
-        <div className="ch-image-uploads">
-          {preview.map((imgSrc, idx) => (
-            <img
-              key={idx}
-              src={imgSrc}
-              alt={`preview-${idx}`}
-              className="ch-img-preview"
-            />
+        <div className="cd-image-section">
+          {[0, 1, 2].map((index) => (
+            <div key={index} className="cd-image-box">
+              <label>Image {index + 1}:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+                required
+              />
+              {previews[index] && (
+                <img src={previews[index]} alt={`preview-${index}`} className="cd-preview-img" />
+              )}
+            </div>
           ))}
         </div>
 
-        <input
-          type="text"
-          placeholder="🌱 Crop Name"
-          value={cropName}
-          onChange={(e) => setCropName(e.target.value)}
-          className="ch-input"
-        />
-
-        <input
-          type="text"
-          placeholder="📏 Land Size (in acres/hectares)"
-          value={landSize}
-          onChange={(e) => setLandSize(e.target.value)}
-          className="ch-input"
-        />
-
-        <textarea
-          placeholder="📝 Description or notes"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="ch-input"
-          rows={4}
-        ></textarea>
-
-        <button type="submit" className="ch-send-btn">
-          🔍 Analyze Crop Health
+        <button type="submit" disabled={loading} className="cd-btn">
+          {loading ? 'Analyzing...' : 'Analyze Crop'}
         </button>
       </form>
 
       {result && (
-        <div className="ch-output">
-          <h3>✅ Analysis Result:</h3>
+        <div className="cd-result">
+          <h3>📋 Result:</h3>
           <pre>{JSON.stringify(result, null, 2)}</pre>
         </div>
       )}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEllipsisV, FaBell, FaSignOutAlt } from 'react-icons/fa';
 import '../styles.css';
+ 
 
 const Header = ({ isSidebarOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -35,7 +36,14 @@ const Header = ({ isSidebarOpen, toggleSidebar }) => {
       <button className="menu-toggle" onClick={toggleSidebar}>
         {isSidebarOpen ? '✖' : <FaEllipsisV />}
       </button>
-      <h1 className="header-title">Farm-genius</h1>
+      <h1 className="header-title">
+        <img
+            src="/public/log1.png" // Put the correct relative or public path to your logo
+             alt="Logo"
+             className="header-logo"
+        />
+            Farm-genius
+      </h1>
 
       <div className="header-options">
         {!isLoggedIn ? (

@@ -70,20 +70,22 @@ const Dashboard = () => {
     const phone = document.getElementById("update-phone").value;
     const bio = document.getElementById("update-bio").value;
 
-    const formData = new FormData();
-    formData.append("farmerName", name);
-    formData.append("farmerEmail", email);
-    formData.append("farmerPhone", phone);
-    formData.append("bio", bio);
-
+    const formData = {
+      "farmerName" : name,
+      "farmerEmail" : email,
+      "farmerPhone" : phone,
+      "bio" : bio
+    }
+    console.log(JSON.stringify(formData));
     try {
       const token = localStorage.getItem("token");
       const response = await fetch("https://new-api.productsscout.in/farmer", {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {

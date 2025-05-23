@@ -5,9 +5,16 @@ import "../styles.css";
 const CropList = () => {
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(true);
+const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch("https://new-api.productsscout.in/farmer/crops/")
+    fetch("https://new-api.productsscout.in/farmer/crops", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => res.json())
       .then((data) => {
         setCrops(data);
@@ -17,7 +24,7 @@ const CropList = () => {
         console.error("Failed to fetch crops", err);
         setLoading(false);
       });
-  }, []);
+  }, );
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this crop?")) return;
@@ -27,6 +34,10 @@ const CropList = () => {
         `https://new-api.productsscout.in/farmer/removeCrop/${id}/`,
         {
           method: "DELETE",
+          headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         }
       );
 
@@ -50,11 +61,11 @@ const CropList = () => {
         <p>No crops found.</p>
       ) : (
         crops.map((crop) => (
-          <div key={crop.id} className="crop-card">
-            <img src={crop.photo} alt={crop.product_name} className="crop-img" />
+          <div key={crop.cropId} className="crop-card">
+            <img src={crop.photo} alt={crop.cropName} className="crop-img" />
             <div className="crop-info">
-              <h3>{crop.product_name}</h3>
-              <p>Land Size: {crop.land_size} acres</p>
+              <h3>{crop.cropName}</h3>
+              <p>Land Size: {crop.landArea} acres</p>
               <p>Price: ₹{crop.price} per quintal</p>
               <p>Quantity: {crop.quantity} quintals</p>
               <p>{crop.description}</p>
