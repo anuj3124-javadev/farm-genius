@@ -31,48 +31,73 @@ const Crophealth = () => {
     setPreviews(newPreviews);
   };
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+  // Simulated image upload function — replace with your real uploader
+  const uploadImageAndGetURL = async (file) => {
+    // Replace this with real upload logic (e.g., Cloudinary)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const fakeURL = `https://your-image-host.com/${file.name}`;
+        resolve(fakeURL);
+      }, 1000);
+    });
+  };
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (images.some((img) => img === null)) {
+    alert('Please upload all 3 images.');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    // Upload images and get URLs
+    const imageUrls = await Promise.all(images.map(uploadImageAndGetURL));
+
+    const payload = {
+      ...formData,
+      images: imageUrls,
+    };
+
+    const res = await fetch('https://new-api.productsscout.in/public/health', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (images.some((img) => img === null)) {
-      alert('Please upload all 3 images.');
-      return;
-    }
+    const responseText = await res.text(); // get raw response first
 
-    setLoading(true);
-
-    try {
-      const base64Images = await Promise.all(images.map((img) => toBase64(img)));
-
-      const payload = {
-        ...formData,
-        images: base64Images,
-      };
-      console.log(formData);
-      const res = await fetch('https://your-api-url.com/api/crop-disease', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+    if (!res.ok) {
+      console.error('❌ API call failed:', {
+        status: res.status,
+        statusText: res.statusText,
+        responseText,
+        payloadSent: payload,
       });
-
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      console.error('Error:', err);
-      alert('Failed to submit data.');
+      throw new Error(`Request failed with status ${res.status}: ${res.statusText}`);
     }
 
-    setLoading(false);
-  };
+    // Try to parse JSON response
+    try {
+      const data = JSON.parse(responseText);
+      setResult(data);
+      console.log('✅ Success:', data);
+    } catch (jsonErr) {
+      console.error('⚠️ Could not parse JSON:', responseText);
+      alert('Received unexpected response format from the server.');
+    }
+
+  } catch (err) {
+    console.error('🚨 Error during submission:', err);
+    alert('Something went wrong. Check console for details.');
+  }
+
+  setLoading(false);
+};
 
   return (
     <div className="cd-container">

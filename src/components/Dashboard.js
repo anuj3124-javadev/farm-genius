@@ -1,4 +1,3 @@
-// Dashboard.js
 import React, { useEffect, useState } from 'react';
 import "../styles.css";
 
@@ -6,23 +5,42 @@ const Dashboard = () => {
   const [userData, setUserData] = useState({});
   const [showEditPic, setShowEditPic] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
+  const [role, setRole] = useState("");
+
+  const baseURL = "https://new-api.productsscout.in";
+
+  const getEndpointByRole = (role) => {
+    if (role === "farmer") return `${baseURL}/farmer`;
+    if (role === "buyer") return `${baseURL}/buyer`;
+    if (role === "seller") return `${baseURL}/seller`;
+    return null;
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      try {
-        const response = await fetch("https://new-api.productsscout.in/farmer", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        setUserData(data || {});
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+      // Try each role endpoint until success
+      const roles = ["farmer", "buyer", "seller"];
+      for (let r of roles) {
+        try {
+          const res = await fetch(getEndpointByRole(r), {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            setUserData(data);
+            setRole(r);
+            break;
+          }
+        } catch (error) {
+          console.error(`Error fetching ${r} data:`, error);
+        }
       }
     };
 
@@ -37,15 +55,15 @@ const Dashboard = () => {
 
   const handleImageUpload = async () => {
     const fileInput = document.getElementById("profile-upload");
-    const file = fileInput.files[0];
-    if (!file) return;
+    const file = fileInput?.files[0];
+    if (!file || !role) return;
 
     const formData = new FormData();
     formData.append("profilePic", file);
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://new-api.productsscout.in/farmer", {
+      const response = await fetch(getEndpointByRole(role), {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -71,15 +89,15 @@ const Dashboard = () => {
     const bio = document.getElementById("update-bio").value;
 
     const formData = {
-      "farmerName" : name,
-      "farmerEmail" : email,
-      "farmerPhone" : phone,
-      "bio" : bio
-    }
-    console.log(JSON.stringify(formData));
+      farmerName: name,
+      farmerEmail: email,
+      farmerPhone: phone,
+      bio: bio
+    };
+
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://new-api.productsscout.in/farmer", {
+      const response = await fetch(getEndpointByRole(role), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +119,7 @@ const Dashboard = () => {
   const handleDeleteProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      await fetch("https://new-api.productsscout.in/farmer", {
+      await fetch(getEndpointByRole(role), {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -125,13 +143,13 @@ const Dashboard = () => {
         <div className="da-dashboard-body">
           <div className="da-profile-card">
             <img
-              src={previewImage || userData?.farmerProfilePic || "https://via.placeholder.com/100"}
+              src={previewImage || userData?.farmerProfilePic || userData?.buyerProfilePic || userData?.sellerProfilePic || "https://via.placeholder.com/100"}
               alt="User"
               className={`da-profile-img ${showEditPic ? "da-profile-img-active" : ""}`}
               onClick={() => setShowEditPic(!showEditPic)}
             />
-            <h2 className="da-profile-name">{userData?.farmerName || "Your Name"}</h2>
-            <p className="da-profile-subtext">{userData?.role || "Role Info"}</p>
+            <h2 className="da-profile-name">{userData?.farmerName || userData?.buyerName || userData?.sellerName || "Your Name"}</h2>
+            <p className="da-profile-subtext">{role.toUpperCase()}</p>
 
             {showEditPic && (
               <div className="da-edit-area">
@@ -156,15 +174,15 @@ const Dashboard = () => {
           <div className="da-form-section">
             <div className="da-ad-input">
               <label>Name</label>
-              <input id="update-name" type="text" defaultValue={userData?.farmerName || ""} />
+              <input id="update-name" type="text" defaultValue={userData?.farmerName || userData?.buyerName || userData?.sellerName || ""} />
             </div>
             <div className="da-ad-input">
               <label>Email</label>
-              <input id="update-email" type="email" defaultValue={userData?.farmerEmail || ""} />
+              <input id="update-email" type="email" defaultValue={userData?.farmerEmail || userData?.buyerEmail || userData?.sellerEmail || ""} />
             </div>
             <div className="da-ad-input">
               <label>Phone</label>
-              <input id="update-phone" type="text" defaultValue={userData?.farmerPhone || ""} />
+              <input id="update-phone" type="text" defaultValue={userData?.farmerPhone || userData?.buyerPhone || userData?.sellerPhone || ""} />
             </div>
             <div className="da-ad-input">
               <label>Bio</label>

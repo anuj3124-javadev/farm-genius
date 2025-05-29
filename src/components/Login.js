@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles.css";
+import "../styles.css"; // 👈 Adjusted path
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // For redirecting after login
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,23 +19,36 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          "userEmail": email,
-          "userPassword": password 
+          userEmail: email,
+          userPassword: password,
         }),
       });
 
-      const data = await response.text();
+      const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data); // Save token for authentication
+        // Save token and role in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+
         alert("Login Successful!");
-        navigate("/"); // Redirect to homepage after login
+
+        // Navigate based on role
+        if (data.role === "farmer") {
+          navigate("/Farmerhome");
+        } else if (data.role === "buyer") {
+          navigate("/Buyerhome");
+        } else if (data.role === "seller") {
+          navigate("/Sellerhome");
+        } else {
+          navigate("/"); // Fallback
+        }
       } else {
         setError(data.message || "Invalid email or password.");
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");
-      console.log(error);
+      console.error(error);
     }
 
     setLoading(false);
@@ -74,7 +87,7 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
           <div className="signup-link">
-            Don't have an account? <Link to="/signup">Sign Up</Link> {/* ✅ Link to Registration */}
+            Don't have an account? <Link to="/signup">Sign Up</Link>
           </div>
         </form>
       </div>
