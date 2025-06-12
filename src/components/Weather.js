@@ -1,8 +1,10 @@
 // Weather.js
 import React, { useState } from "react";
 import '../styles.css';
+import { useAppContext } from '../context/AppContext';
 
 const Weather = () => {
+  const { baseURL} = useAppContext();
   const [city, setCity] = useState("");
   const [weatherdata, setWeatherdata] = useState(null);
   const [error, setError] = useState(null);
@@ -14,7 +16,7 @@ const Weather = () => {
       return;
     }
 
-    const apiUrl = `https://ml.productsscout.xyz/api/weather-update/`;
+    const apiUrl = `${baseURL}/api/weather-update/`;
 
     try {
       setLoading(true);

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
+import { useAppContext } from '../context/AppContext';
 
 const Registration = () => {
+  const { baseURL} = useAppContext();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -38,16 +40,17 @@ const Registration = () => {
     e.preventDefault();
 
     const roleEndpoints = {
-      farmer: "https://new-api.productsscout.in/public/register-farmer",
-      buyer: "https://new-api.productsscout.in/public/register-buyer",
-      seller: "https://new-api.productsscout.in/public/register-seller",
+      farmer: `${baseURL}/public/register-farmer`,
+      buyer: `${baseURL}/public/register-buyer`,
+      seller: `${baseURL}/public/register-seller`,
     };
 
     const requestBody = {
       [`${formData.role}Name`]: formData.name,
       [`${formData.role}Email`]: formData.email,
       [`${formData.role}Password`]: formData.password,
-      [`${formData.role}Phone`]: formData.contact,
+       [`${formData.role}Role`]: formData.role,
+      [`${formData.role}Contact`]: formData.contact,
       [`${formData.role}Address`]: formData.address,
     };
 
@@ -67,6 +70,9 @@ const Registration = () => {
           body: formDataObj,
         });
       } else {
+        console.log(requestBody);
+        console.log(formData);
+        console.log(roleEndpoints[formData.role]);
         response = await fetch(roleEndpoints[formData.role], {
           method: "POST",
           headers: {

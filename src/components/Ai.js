@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../styles.css";
 import ReactMarkdown from "react-markdown";
+import { useAppContext } from '../context/AppContext';
 
 const Ai = () => {
+  const { baseURL} = useAppContext();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ const Ai = () => {
 
     try {
       console.log("befor fatch");
-      const response = await fetch("https://ml.productsscout.xyz/api/chat/", {
+      const response = await fetch(`"${baseURL}/api/chat/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }), // sending user's message

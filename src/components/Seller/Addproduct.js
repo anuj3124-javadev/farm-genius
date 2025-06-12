@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "../../styles.css";
+import { useAppContext } from '../../context/AppContext';
 
 const AddProduct = () => {
+  const { baseURL} = useAppContext();
   const [formData, setFormData] = useState({
-    cropName: "",
-    quantity: "",
-    photo: null,
-    price: "",
-    description: "",
+    productName: "",
+    productCategory: "",
+    productDescription: "",
+    productPrice: null,
+    productQuantity: "",
+    productImage: null
   });
 
   const [loading, setLoading] = useState(false);
@@ -27,11 +30,12 @@ const AddProduct = () => {
     try {
       console.log(formData);
       const requestBody = {
-        cropName: formData.cropName,
-        quantity: formData.quantity,
-        photo: formData.photo,
-        price: formData.price,
-        description: formData.description,
+        productName: formData.productName,
+        productCategory: formData.productCategory,
+        productDescription: formData.productDescription,
+        productPrice: formData.productPrice,
+        productQuantity: formData.productQuantity,
+        productImage: formData.productImage
       };
 
       console.log(requestBody);
@@ -39,7 +43,7 @@ const AddProduct = () => {
 
       const token = localStorage.getItem("token");
 
-      const response = await fetch("https://new-api.productsscout.in/seller", {
+      const response = await fetch(`${baseURL}/seller`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,11 +57,11 @@ const AddProduct = () => {
         alert("Crop submitted successfully!");
         console.log("Response:", result);
         setFormData({
-          cropName: "",
-          quantity: "",
-          photo: null,
-          price: "",
-          description: "",
+          productName: "",
+          productCategory: "",
+          productDescription: "",
+          productPrice: "",
+          productImage: null
         });
       } else {
         let errorMessage = "Unknown error";
@@ -84,27 +88,27 @@ const AddProduct = () => {
 
         <input
           type="text"
-          name="cropName"
+          name="productName"
           placeholder="Product Name"
           className="ad-input"
-          value={formData.cropName}
+          value={formData.productName}
           onChange={handleChange}
           required
         />
 
         <input
           type="text"
-          name="quantity"
-          placeholder="Quantity (e.g. 10 Quintals)"
+          name="productCategory"
+          placeholder="Define category"
           className="ad-input"
-          value={formData.quantity}
+          value={formData.productCategory}
           onChange={handleChange}
           required
         />
 
         <input
           type="file"
-          name="photo"
+          name="productImage"
           accept="image/*"
           className="ad-input-file"
           onChange={handleChange}
@@ -112,19 +116,19 @@ const AddProduct = () => {
 
         <input
           type="number"
-          name="price"
+          name="productPrice"
           placeholder="Price per Quintal (₹)"
           className="ad-input"
-          value={formData.price}
+          value={formData.productPrice}
           onChange={handleChange}
           required
         />
 
         <textarea
-          name="description"
+          name="productDescription"
           placeholder="Product Description"
           className="ad-textarea"
-          value={formData.description}
+          value={formData.productDescription}
           onChange={handleChange}
           required
         />

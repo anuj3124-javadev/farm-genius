@@ -9,7 +9,7 @@ const Buyersidebar = ({ isSidebarOpen }) => {
   return (
     <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
       <ul className="sidebar-menu">
-        <li onClick={() => navigate('/')}>
+        <li onClick={() => navigate('/Bu-Home')}>
           <FaHome className="menu-icon" />
           {isSidebarOpen && <span>Home</span>}
         </li>

@@ -1,15 +1,17 @@
 // Cart.js
 import React, { useEffect, useState } from 'react';
 import '../../styles.css';
+import { useAppContext } from '../../context/AppContext';
 
 const Cart = () => {
+  const { baseURL} = useAppContext();
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://new-api.productsscout.in/cart-itemlist', {
+        const response = await fetch(`${baseURL}/cart-itemlist`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -22,12 +24,12 @@ const Cart = () => {
       }
     };
     fetchCartItems();
-  }, []);
+  }, );
 
   const removeFromCart = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`https://new-api.productsscout.in/buyer/${productId}`, {
+      await fetch(`${baseURL}/buyer/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

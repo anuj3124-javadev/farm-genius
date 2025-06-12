@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles.css";
 
+
 const images = [
   "image1.jpg",
   "image2.jpg",

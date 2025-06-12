@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../styles.css";
+import { useAppContext } from '../context/AppContext';
 
 const AddProduct = () => {
+  const { baseURL} = useAppContext();
   const [formData, setFormData] = useState({
     cropName: "",
     quantity: "",
@@ -23,9 +25,8 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    
     try {
-      console.log(formData);
       const requestBody = {
         cropName: formData.cropName,
         quantity: formData.quantity,
@@ -34,12 +35,8 @@ const AddProduct = () => {
         description: formData.description,
       };
 
-      console.log(requestBody);
-      console.log(JSON.stringify(requestBody));
-
-      const token = localStorage.getItem("token");
-
-      const response = await fetch("https://new-api.productsscout.in/farmer/addCrop", {
+      let token = localStorage.getItem("token");
+      const response = await fetch(`${baseURL}/farmer/addCrop`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +44,7 @@ const AddProduct = () => {
         },
         body: JSON.stringify(requestBody),
       });
+
 
       if (response.ok) {
         const result = await response.json();
@@ -62,12 +60,7 @@ const AddProduct = () => {
       } else {
         let errorMessage = "Unknown error";
         console.log(response.status);
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          errorMessage = "Server did not return JSON";
-        }
+        console.log(await response.json());
         alert("Submission failed: " + errorMessage);
       }
     } catch (err) {

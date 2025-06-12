@@ -1,15 +1,17 @@
 // Cropstore.js
 import React, { useEffect, useState } from 'react';
 import '../../styles.css';
+import { useAppContext } from '../../context/AppContext';
 
 const Cropstore = () => {
+  const { baseURL} = useAppContext();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://new-api.productsscout.in/cart-itemlist', {
+        const response = await fetch(`${baseURL}/cart-itemlist`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -22,12 +24,12 @@ const Cropstore = () => {
       }
     };
     fetchProducts();
-  }, []);
+  }, );
 
   const addToCart = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://new-api.productsscout.in//buyer/${productId}`, {
+      const response = await fetch(`${baseURL}/buyer/${productId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -37,6 +39,7 @@ const Cropstore = () => {
       });
       const result = await response.json();
       alert('Added to cart');
+      console.log('Add to cart failed:', result);
     } catch (error) {
       console.error('Add to cart failed:', error);
     }

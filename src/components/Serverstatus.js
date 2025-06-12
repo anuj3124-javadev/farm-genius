@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import '../styles.css';
+import { useAppContext } from '../context/AppContext';
 
 const ServerStatus = () => {
+  const { baseURL} = useAppContext();
   const [isOnline, setIsOnline] = useState(null);
 
   const checkServer = async () => {
     try {
-      const response = await fetch('https://new-api.productsscout.in/', {
+      const response = await fetch(`${baseURL}/public/health`, {
         method: 'GET',
       });
 

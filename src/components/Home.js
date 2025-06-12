@@ -10,6 +10,7 @@ const images = [
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
+  
 
   useEffect(() => {
     const interval = setInterval(() => {

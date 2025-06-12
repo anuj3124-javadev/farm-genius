@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import '../styles.css';
+import { useAppContext } from '../context/AppContext';
 
 const Crophealth = () => {
+  const { baseURL} = useAppContext();
   const [formData, setFormData] = useState({
     cropName: '',
     quantity: '',
@@ -61,7 +63,7 @@ const Crophealth = () => {
       images: imageUrls,
     };
 
-    const res = await fetch('https://new-api.productsscout.in/public/health', {
+    const res = await fetch(`${baseURL}/public/health`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

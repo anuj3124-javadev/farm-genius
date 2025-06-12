@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "../styles.css";
 import ReactMarkdown from 'react-markdown';
+import { useAppContext } from '../context/AppContext';
 
 const CropEducation = () => {
+  const { baseURL} = useAppContext();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ const CropEducation = () => {
 
     try {
       console.log('entring into try block');
-      const response = await fetch("https://ml.productsscout.xyz/api/crop-details-chatbot/", {
+      const response = await fetch(`${baseURL}/api/crop-details-chatbot/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),

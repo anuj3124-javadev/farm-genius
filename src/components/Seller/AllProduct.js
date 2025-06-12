@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../../styles.css";
+import { useAppContext } from '../../context/AppContext';
 
 const CropList = () => {
+  const { baseURL} = useAppContext();
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch("https://new-api.productsscout.in/seller/all-products", {
+    fetch(`${baseURL}/seller/all-products`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +32,7 @@ const CropList = () => {
 
     try {
       const response = await fetch(
-        `https://new-api.productsscout.in/seller/${id}/`,
+        `${baseURL}/seller/${id}/`,
         {
           method: "DELETE",
           headers: {

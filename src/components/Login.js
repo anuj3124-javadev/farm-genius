@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles.css"; // 👈 Adjusted path
+import "../styles.css";
+import { useAppContext } from "../context/AppContext";
 
-const Login = () => {
+const Login = ({ setRole }) => {
+  const { baseURL } = useAppContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,7 +18,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://new-api.productsscout.in/public/login", {
+      const response = await fetch(`${baseURL}/public/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -23,28 +26,31 @@ const Login = () => {
           userPassword: password,
         }),
       });
-
-      const data = await response.json();
-
+     
+      console.log("before if");
+      
       if (response.ok) {
-        // Save token and role in localStorage
+        let data = await response.json();
+        console.log(data);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("role", data.role);
+        localStorage.setItem("role", data.role?.[1]);
+        setRole(data.role?.[1]); // ✅ Update App state
+
+        window.dispatchEvent(new Event("storage"));
 
         alert("Login Successful!");
 
-        // Navigate based on role
-        if (data.role === "farmer") {
-          navigate("/Farmerhome");
-        } else if (data.role === "buyer") {
-          navigate("/Buyerhome");
-        } else if (data.role === "seller") {
-          navigate("/Sellerhome");
+        if (data.role === "ROLE_FARMER") {
+          navigate("/Fa-Home");
+        } else if (data.role === "ROLE_BUYER") {
+          navigate("/Bu-Home");
+        } else if (data.role === "ROLE_SELLER") {
+          navigate("/Sel-Home");
         } else {
-          navigate("/"); // Fallback
+          navigate("/");
         }
       } else {
-        setError(data.message || "Invalid email or password.");
+        setError(response.error || "Invalid email or password.");
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "../styles.css";
+import { useAppContext } from '../context/AppContext';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState({});
   const [showEditPic, setShowEditPic] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [role, setRole] = useState("");
-
-  const baseURL = "https://new-api.productsscout.in";
+  
+  const { baseURL} = useAppContext();
 
   const getEndpointByRole = (role) => {
     if (role === "farmer") return `${baseURL}/farmer`;
@@ -182,7 +183,7 @@ const Dashboard = () => {
             </div>
             <div className="da-ad-input">
               <label>Phone</label>
-              <input id="update-phone" type="text" defaultValue={userData?.farmerPhone || userData?.buyerPhone || userData?.sellerPhone || ""} />
+              <input id="update-phone" type="text" defaultValue={userData?.farmerContact || userData?.buyerContact || userData?.sellerContact || ""} />
             </div>
             <div className="da-ad-input">
               <label>Bio</label>
